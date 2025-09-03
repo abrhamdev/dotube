@@ -112,7 +112,7 @@ const SearchResults = () => {
                           {video.snippet.title}
                         </h2>
                         <p className="text-sm text-gray-400 mt-1">{video.snippet.channelTitle}</p>
-                        <p className="text-sm text-gray-400 mt-1">{video.snippet.publishedAt.slice(0, 10)}</p>
+                        <p className="text-sm text-gray-400 mt-1">{video?.snippet?.publishedAt?.slice(0, 10)}</p>
                         <p className="text-sm mt-2 text-gray-300 line-clamp-2">
                           {video.snippet.description}
                         </p>
