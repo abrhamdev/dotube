@@ -5,6 +5,7 @@ import { apiUrl } from '../../apiurl';
 import NavBar from './NavBar';
 import Sidebar from './Sidebar';
 import { useSearchParams } from 'react-router-dom';
+import { flaskapi } from '../../flaskapi';
 
 const YouTubeLoader = () => {
   const [videoUrl, setVideoUrl] = useState('');
@@ -47,7 +48,7 @@ const YouTubeLoader = () => {
       setLoading(true);
       setError(null);
       try {
-        const res = await axios.get(`http://localhost:7000/info?url=${videoUrl}`);
+        const res = await axios.get(`${flaskapi}/info?url=${videoUrl}`);
         console.log(res.data);
         setVideoDetails(res.data);
         
@@ -73,7 +74,7 @@ const YouTubeLoader = () => {
     setSuccess(null);
   
     try {
-      const response = await fetch("http://localhost:7000/download", {
+      const response = await fetch(`${flaskapi}/download`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
