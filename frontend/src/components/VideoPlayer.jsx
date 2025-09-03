@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { HiArrowLeft, HiThumbUp, HiThumbDown,HiSearch, HiShare, HiDotsHorizontal, HiDownload } from 'react-icons/hi';
 import VideoCard from './VideoCard';
 import axios from 'axios';
@@ -62,7 +62,7 @@ const VideoPlayer = () => {
   };
 
 
-  /*const handleDownload = async () => {
+  const handleDownload = async () => {
     try {
       const response = await axios.get(`${apiUrl}/youtube/download?videoUrl=https://www.youtube.com/watch?v=${video.id}`, {
         responseType: 'blob',
@@ -82,7 +82,7 @@ const VideoPlayer = () => {
       console.error('Download failed', err);
     }
   };
-*/
+
 
   return (
     <div className="min-h-screen bg-[#0f0f0f]">
@@ -137,15 +137,14 @@ const VideoPlayer = () => {
                <HiThumbDown size={20} />
                <span className="text-sm">{video?video.statistics.dislikeCount:"no"}</span>
              </button>
-             <button className="flex items-center cursor-pointer space-x-2 px-4 py-2 rounded-full hover:bg-gray-800">
-               <HiShare size={20} />
-               <span className="text-sm">Share</span>
-             </button>
 
              <a href={`${apiUrl}/youtube/download?videoUrl=https://www.youtube.com/watch?v=${videoId}`} rel="noopener noreferrer" >
-             <button className="p-2 rounded-full cursor-pointer flex gap-1 hover:bg-gray-800">
+              
+               <button className="p-2 rounded-full cursor-pointer flex gap-1 hover:bg-gray-800">
                <HiDownload size={20} />
-               <p className="text-sm">Download</p>
+               <Link to={`/linkdownload?url=https://www.youtube.com/watch?v=${videoId}`}>
+                <p className="text-sm">Download</p>
+               </Link>
              </button>
              </a>
            </div>
@@ -162,9 +161,6 @@ const VideoPlayer = () => {
           <h3 className="font-medium text-white">{video?video.snippet.channelTitle:"no"}</h3>
         </div>
       </div>
-      <button className="px-4 py-2 bg-white text-black rounded-full font-medium hover:bg-gray-200">
-        Subscribe
-      </button>
     </div>
 
     <div className="text-white my-5 bg-gray-800 p-4 rounded-lg">
