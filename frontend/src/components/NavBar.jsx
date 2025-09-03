@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { HiMenu, HiSearch, HiMicrophone, HiVideoCamera, HiBell, HiUserCircle, HiFolderDownload } from 'react-icons/hi';
+import { HiMenu, HiSearch, HiMicrophone, HiVideoCamera, HiBell, HiUserCircle, HiFolderDownload,HiLink
+ } from 'react-icons/hi';
 import SearchSuggestions from './SearchSuggestions';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const NavBar = ({ onMenuClick }) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -111,12 +112,17 @@ const NavBar = ({ onMenuClick }) => {
             />
           )}
         </div>
-        <button className="ml-4 p-2 hover:bg-gray-800 rounded-full">
+        <Link to={"/linkdownload"} className=" flex gap-1 ml-4 p-2 hover:bg-gray-800 rounded-full">
+          <HiLink className="text-xl text-red-600" />
+          <p className='font-bold'>Link Download</p>
+        </Link>
+       {/* <button className="ml-4 p-2 hover:bg-gray-800 rounded-full">
           <HiMicrophone size={20} />
-        </button>
+       </button>*/}
       </div>
-
-      <div className="flex items-center space-x-4">
+   
+    <div></div>
+      {/*<div className="flex items-center space-x-4">
         <button className="p-2 hover:bg-gray-800 rounded-full">
           <HiVideoCamera size={20} />
         </button>
@@ -126,7 +132,7 @@ const NavBar = ({ onMenuClick }) => {
         <button className="p-2 hover:bg-gray-800 rounded-full">
           <HiUserCircle size={20} />
         </button>
-      </div>
+      </div>*/}
     </nav>
   );
 };
