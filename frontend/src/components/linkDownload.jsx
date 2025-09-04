@@ -39,7 +39,7 @@ const YouTubeLoader = () => {
   
   // Fetch video details from Flask API
   useEffect(() => {
-    if (!videoUrl.trim()) {
+    if (!videoUrl) {
       setVideoDetails(null);
       return;
     }
