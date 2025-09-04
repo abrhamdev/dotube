@@ -2,6 +2,8 @@ from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 from controllers.getVideoInfo import get_video_info
 from controllers.download_video import download_video
+from dotenv import load_dotenv
+load_dotenv() 
 import os
 
 app = Flask(__name__)
@@ -45,4 +47,5 @@ def info_route():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(port=7000, debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port,debug=True)
