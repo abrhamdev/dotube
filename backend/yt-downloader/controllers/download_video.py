@@ -1,16 +1,24 @@
 from flask import Response, jsonify
 import yt_dlp
 import requests
+import os
 
 def download_video(url: str, format_id: str, ext: str):
     try:
+        # Path to cookies.txt in the root directory
+        cookies_file_path = os.path.join(os.getcwd(), "cookies.txt")
+        if not os.path.exists(cookies_file_path):
+            cookies_file_path = None  # fallback if file doesn't exist
+
         # yt-dlp options
         ydl_opts = {
             'format': format_id,
             'quiet': True,
             'merge_output_format': ext,
         }
-        
+        if cookies_file_path:
+            ydl_opts['cookiefile'] = cookies_file_path
+
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             info = ydl.extract_info(url, download=False)
             stream_url = info.get("url")
