@@ -1,33 +1,16 @@
 from flask import Response, jsonify
 import yt_dlp
 import requests
-import os
-import base64
 
 def download_video(url: str, format_id: str, ext: str):
     try:
-        # Decode YOUTUBE_COOKIE from .env safely in binary mode
-        cookie_base64 = os.getenv("YOUTUBE_COOKIE")
-        cookies_file_path = None
-
-        if cookie_base64:
-            # Decode base64 to bytes
-            cookies_data = base64.b64decode(cookie_base64)
-            # Write bytes directly to cookies.txt (preserves Netscape format)
-            with open("cookies.txt", "wb") as f:
-                f.write(cookies_data)
-            cookies_file_path = "cookies.txt"
-
         # yt-dlp options
         ydl_opts = {
             'format': format_id,
             'quiet': True,
             'merge_output_format': ext,
         }
-        if cookies_file_path:
-            ydl_opts['cookiefile'] = cookies_file_path
-
-        # Extract video info without downloading
+        
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             info = ydl.extract_info(url, download=False)
             stream_url = info.get("url")
