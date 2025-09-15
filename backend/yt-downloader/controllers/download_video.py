@@ -7,7 +7,7 @@ def download_video(url: str, format_id: str, ext: str):
     try:
         # Path to cookie file
         cookie_file = os.path.join(os.getcwd(), "cookie.txt")
-
+        print(cookie_file)
         # yt-dlp options
         ydl_opts = {
             'format': format_id,
