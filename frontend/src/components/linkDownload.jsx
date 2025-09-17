@@ -99,12 +99,11 @@ const YouTubeLoader = () => {
         chunks.push(value);
         receivedLength += value.length;
   
-        if (contentLength) {
+        if (contentLength>0) {
           const percent = Math.round((receivedLength / contentLength) * 100);
           setProgress(percent);
         }
       }
-      console.log("working here");
       // Combine chunks into a Blob
       const blob = new Blob(chunks, { type: extension.startsWith("mp") ? "video/mp4" : "video/webm" });
       const url = window.URL.createObjectURL(blob);
@@ -155,7 +154,7 @@ const YouTubeLoader = () => {
           quality: `${format.height}p`,
           note: format.format_note,
           ext: format.ext,
-          size: format.filesize ? `(${(format.filesize / (1024 * 1024)).toFixed(1)} MB)` : '',
+          size: format.filesize ? (format.filesize / (1024 * 1024)).toFixed(1) : '',
           tbr: format.tbr
         });
       }
@@ -334,19 +333,26 @@ const YouTubeLoader = () => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     {formats.merged.map((format, index) => (
                       <div key={index} className="bg-gray-700 p-2 rounded-md flex justify-between items-center">
-                        <div className="text-left">
-                          <div className="font-medium text-xs">{format.quality}</div>
-                          <div className="text-xs text-gray-400">{format.size} • {format.ext.toUpperCase()}</div>
+                        {format.size ? 
+                        <>
+                          <div className="text-left">
+                            <div className="font-medium text-xs">{format.quality}</div>
+                            <div className="text-xs text-gray-400">{format.size} MB • {format.ext.toUpperCase()}</div>
+                          </div>
+                          <button
+                            onClick={() => handleDownload(format.id, `${format.quality} ${format.note}`, format.ext, true)}
+                            disabled={downloading}
+                            className="bg-green-600 hover:bg-green-500 text-white py-1 px-2 rounded text-xs flex items-center transition-colors disabled:opacity-50"
+                          >
+                            <HiDownload size={12} className="mr-1" />
+                            Download
+                          </button>
+                          
+                        </>
+                        :
+                        ''
+                          }
                         </div>
-                        <button
-                          onClick={() => handleDownload(format.id, `${format.quality} ${format.note}`, format.ext, true)}
-                          disabled={downloading}
-                          className="bg-green-600 hover:bg-green-500 text-white py-1 px-2 rounded text-xs flex items-center transition-colors disabled:opacity-50"
-                        >
-                          <HiDownload size={12} className="mr-1" />
-                          Download
-                        </button>
-                      </div>
                     ))}
                   </div>
                 </div>
