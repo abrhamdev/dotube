@@ -6,6 +6,8 @@ import axios from 'axios';
 import NavBar from './NavBar';
 import Sidebar from './Sidebar';
 import { apiUrl } from '../../apiurl';
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const VideoPlayer = () => {
   const { videoId } = useParams();
@@ -111,12 +113,18 @@ const VideoPlayer = () => {
                 ></iframe>
               </div>
           <div className="mt-4">
-         <h1 className="text-xl font-bold text-white">{video?video.snippet.title:"no"}</h1>
+         <SkeletonTheme baseColor="#2d2d2d" highlightColor="#3d3d3d">
+           <h1 className="text-xl font-bold text-white">{video ? video.snippet.title : <Skeleton width={200} height={24} />}</h1>
+         </SkeletonTheme>
          <div className="flex items-center justify-between mt-2">
            <div className="flex items-center">
-             <span className="text-gray-400 text-sm">{video?video.statistics.viewCount:"no"} Views</span>
+             <SkeletonTheme baseColor="#2d2d2d" highlightColor="#3d3d3d">
+               <span className="text-gray-400 text-sm">{video ? Number(video.statistics.viewCount).toLocaleString() : <Skeleton width={100} height={20} />} Views</span>
+             </SkeletonTheme>
              <span className="mx-2 text-gray-400">•</span>
-             <span className="text-gray-400 text-sm">{video?video.snippet.publishedAt:"no"}</span>
+             <SkeletonTheme baseColor="#2d2d2d" highlightColor="#3d3d3d">
+               <span className="text-gray-400 text-sm">{video ? new Date(video.snippet.publishedAt).toLocaleDateString() : <Skeleton width={120} height={16} />}</span>
+             </SkeletonTheme>
            </div>
            <div className="flex items-center space-x-4">
              <button
@@ -126,7 +134,9 @@ const VideoPlayer = () => {
                onClick={handleLike}
              >
                <HiThumbUp size={20} />
-               <span className="text-sm">{video?video.statistics.likeCount:"no"}</span>
+               <SkeletonTheme baseColor="#2d2d2d" highlightColor="#3d3d3d">
+                 <span className="text-sm">{video ? Number(video.statistics.likeCount).toLocaleString() : <Skeleton width={64} height={16} />}</span>
+               </SkeletonTheme>
              </button>
              <button
                className={`flex items-center cursor-pointer space-x-2 px-4 bg-gray-800  py-2 rounded-full ${
@@ -135,30 +145,30 @@ const VideoPlayer = () => {
                onClick={handleDislike}
              >
                <HiThumbDown size={20} />
-               <span className="text-sm">{video?video.statistics.dislikeCount:"no"}</span>
+               <SkeletonTheme baseColor="#2d2d2d" highlightColor="#3d3d3d">
+                 <span className="text-sm">{video ? video.statistics.dislikeCount : <Skeleton width={64} height={16} />}</span>
+               </SkeletonTheme>
              </button>
 
-             <a href={`${apiUrl}/youtube/download?videoUrl=https://www.youtube.com/watch?v=${videoId}`} rel="noopener noreferrer" >
-              
-               <button className="p-2 rounded-full cursor-pointer flex gap-1 hover:bg-gray-800">
-               <HiDownload size={20} />
-               <Link to={`/linkdownload?url=https://www.youtube.com/watch?v=${videoId}`}>
-                <p className="text-sm">Download</p>
+             <div>
+               <Link to={`/linkdownload?url=https://www.youtube.com/watch?v=${videoId}`} className='flex hover:text-blue-800 transition-all duration-300'>
+                 <HiDownload size={20} /><p className="text-sm">Download</p>
                </Link>
-             </button>
-             </a>
+             </div>
            </div>
          </div>
 
     <div className="flex items-center justify-between mt-4 p-4 bg-[#1f1f1f] rounded-lg">
       <div className="flex items-center">
         <img
-          src={`${channel?channel[0].snippet.thumbnails.default.url:null}`}
-            alt={video?video.snippet.channelTitle:"no"}
-            className="w-10 h-10 rounded-full mr-4"
+          src={`${channel ? channel[0].snippet.thumbnails.default.url : null}`}
+            alt={video ? video.snippet.channelTitle : ""}
+            className="w-10 h-10 rounded-full mr-4 skeleton-loader"
         />
         <div>
-          <h3 className="font-medium text-white">{video?video.snippet.channelTitle:"no"}</h3>
+          <SkeletonTheme baseColor="#2d2d2d" highlightColor="#3d3d3d">
+            <h3 className="font-medium text-white">{video ? video.snippet.channelTitle : <Skeleton width={160} height={20} />}</h3>
+          </SkeletonTheme>
         </div>
       </div>
     </div>
