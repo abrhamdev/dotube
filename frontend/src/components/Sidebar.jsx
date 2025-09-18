@@ -5,11 +5,6 @@ import { HiHome, HiFire, HiCollection, HiClock, HiThumbUp, HiVideoCamera } from 
 const Sidebar = ({ isOpen }) => {
   const menuItems = [
     { icon: <HiHome size={24} />, label: 'Home', path: '/' },
-    { icon: <HiFire size={24} />, label: 'Trending', path: '/trending' },
-    { icon: <HiCollection size={24} />, label: 'Subscriptions', path: '/subscriptions' },
-    { icon: <HiVideoCamera size={24} />, label: 'Library', path: '/library' },
-    { icon: <HiClock size={24} />, label: 'History', path: '/history' },
-    { icon: <HiThumbUp size={24} />, label: 'Liked videos', path: '/liked' },
   ];
 
   return (
